@@ -17,14 +17,24 @@ object App {
 
     val sqlContext = new SQLContext(sc)
     
-    println(System.getenv("SPARK_HOME"))
-    
     val homeDir = System.getenv("HOME") 
     val inputPath = homeDir + "/sia/github-archive/2015-03-01-0.json" 
-    val ghLog = sqlContext.jsonFile(inputPath)
+    val ghLog = sqlContext.read.json(inputPath)
     
     val pushes = ghLog.filter("type = 'PushEvent'")
+    
+    
     pushes.printSchema
+    println("all events: " + ghLog.count)
+    println("only pushes: " + pushes.count)
+    pushes.show(5)
+    
+    val groups = pushes.groupBy("payload.commits.author").count
+    groups.show(5)
+    
+    val ordered = groups.orderBy(groups("count").desc) 
+    ordered.show(5)
+
   }
 
 }
