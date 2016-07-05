@@ -29,10 +29,10 @@ object App {
     println("only pushes: " + pushes.count)
     pushes.show(5)
     
-    val groups = pushes.groupBy("payload.commits.author").count
-    groups.show(5)
+    val grouped = pushes.groupBy("actor.login").count
+    grouped.show(5)
     
-    val ordered = groups.orderBy(groups("count").desc) 
+    val ordered = grouped.orderBy(grouped("count").desc)
     ordered.show(5)
 
   }
