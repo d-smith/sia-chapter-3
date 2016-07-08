@@ -11,3 +11,8 @@ profile in the maven config to download the internet for the initial build.
 Note the book has been significantly updated since the above comment was added.
 
 Currently looking at the vm setup needed for submitting jobs.
+
+After bring up the virtual box for the first time, add the following to ssh
+in as spark:
+
+config.ssh.username = "spark" 
